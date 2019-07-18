@@ -40,7 +40,7 @@
 // This indicates if the bits read/write should be reversed
 #define _SPI_HARDWARE_LSB
 
-extern SPI_HandleTypeDef hspi1;
+extern SPI_HandleTypeDef hspi2;
 
 
 uint8_t reverse_bit(uint8_t num) {
@@ -60,12 +60,12 @@ void spi_rw(uint8_t* data, uint8_t count) {
     for (uint8_t i = 0; i < count; i++) {
         data[i] = reverse_bit(data[i]);
     }
-    HAL_SPI_TransmitReceive(&hspi1, data, data, count, _SPI_TIMEOUT);
+    HAL_SPI_TransmitReceive(&hspi2, data, data, count, _SPI_TIMEOUT);
     for (uint8_t i = 0; i < count; i++) {
         data[i] = reverse_bit(data[i]);
     }
 #else
-    HAL_SPI_TransmitReceive(&hspi1, data, data, count, _SPI_TIMEOUT);
+    HAL_SPI_TransmitReceive(&hspi2, data, data, count, _SPI_TIMEOUT);
 #endif
     HAL_Delay(1);
     HAL_GPIO_WritePin(SS_GPIO_Port, SS_Pin, GPIO_PIN_SET);
