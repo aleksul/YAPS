@@ -60,6 +60,7 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define BUTTON_Pin GPIO_PIN_2
 #define BUTTON_GPIO_Port GPIOA
+#define BUTTON_EXTI_IRQn EXTI2_IRQn
 #define IRQ_PN532_Pin GPIO_PIN_7
 #define IRQ_PN532_GPIO_Port GPIOC
 #define LED_GREEN_Pin GPIO_PIN_9
@@ -76,9 +77,6 @@ void Error_Handler(void);
 #define INT1_PN532_GPIO_Port GPIOB
 #define INT0_PN532_Pin GPIO_PIN_5
 #define INT0_PN532_GPIO_Port GPIOB
-
-#define SS_Pin GPIO_PIN_4
-#define SS_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

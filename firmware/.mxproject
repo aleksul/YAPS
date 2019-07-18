@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=C:/Users/Technospark_13/Desktop/Keypad/firmware/Inc
+HeaderPath=C:/Users/Technospark_13/Desktop/keypad/firmware/Inc
 HeaderFiles=stm32f1xx_it.h;stm32f1xx_hal_conf.h;main.h;
-SourcePath=C:/Users/Technospark_13/Desktop/Keypad/firmware/Src
+SourcePath=C:/Users/Technospark_13/Desktop/keypad/firmware/Src
 SourceFiles=stm32f1xx_it.c;stm32f1xx_hal_msp.c;main.c;
 
 [PreviousLibFiles]

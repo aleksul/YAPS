@@ -31,3 +31,4 @@ keypad_cubemx\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h
 keypad_cubemx\main.o: ../Inc/pn532_stm32f1.h
 keypad_cubemx\main.o: ../Inc/pn532.h
 keypad_cubemx\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+keypad_cubemx\main.o: ../Inc/led.h

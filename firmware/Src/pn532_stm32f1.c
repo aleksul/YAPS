@@ -54,8 +54,8 @@ uint8_t reverse_bit(uint8_t num) {
 }
 
 void spi_rw(uint8_t* data, uint8_t count) {
-    HAL_GPIO_WritePin(SS_GPIO_Port, SS_Pin, GPIO_PIN_RESET);
-    HAL_Delay(1);
+   // HAL_GPIO_WritePin(SPI2_NSS, SPI2_NSS_Pin, GPIO_PIN_RESET);
+   // HAL_Delay(1);
 #ifndef _SPI_HARDWARE_LSB
     for (uint8_t i = 0; i < count; i++) {
         data[i] = reverse_bit(data[i]);
@@ -67,8 +67,8 @@ void spi_rw(uint8_t* data, uint8_t count) {
 #else
     HAL_SPI_TransmitReceive(&hspi2, data, data, count, _SPI_TIMEOUT);
 #endif
-    HAL_Delay(1);
-    HAL_GPIO_WritePin(SS_GPIO_Port, SS_Pin, GPIO_PIN_SET);
+    //HAL_Delay(1);
+    //HAL_GPIO_WritePin(SPI2_NSS, SPI2_NSS_Pin, GPIO_PIN_SET);
 }
 
 int PN532_Reset(void) {
@@ -124,7 +124,7 @@ int PN532_Wakeup(void) {
     // Send any special commands/data to wake up PN532
     uint8_t data[] = {0x00};
     HAL_Delay(1000);
-    HAL_GPIO_WritePin(SS_GPIO_Port, SS_Pin, GPIO_PIN_RESET);
+    //HAL_GPIO_WritePin(SPI2_NSS, SPI2_NSS_Pin, GPIO_PIN_RESET);
     HAL_Delay(2); // T_osc_start
     spi_rw(data, 1);
     HAL_Delay(1000);
