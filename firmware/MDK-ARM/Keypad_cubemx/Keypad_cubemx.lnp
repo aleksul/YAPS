@@ -6,6 +6,7 @@
 "keypad_cubemx\stm32f1xx_it.o"
 "keypad_cubemx\stm32f1xx_hal_msp.o"
 "keypad_cubemx\led.o"
+"keypad_cubemx\button.o"
 "keypad_cubemx\stm32f1xx_hal_gpio_ex.o"
 "keypad_cubemx\stm32f1xx_hal_spi.o"
 "keypad_cubemx\stm32f1xx_hal_spi_ex.o"
@@ -25,6 +26,7 @@
 "keypad_cubemx\stm32f1xx_hal_flash.o"
 "keypad_cubemx\stm32f1xx_hal_flash_ex.o"
 "keypad_cubemx\system_stm32f1xx.o"
+"keypad_cubemx\eventrecorder.o"
 "keypad_cubemx\retarget_io.o"
 --library_type=microlib --strict --scatter "Keypad_cubemx\Keypad_cubemx.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
