@@ -106,7 +106,6 @@ int main(void)
     MX_SPI2_Init();
     MX_UART4_Init();
     /* USER CODE BEGIN 2 */
-    white_led(1);
     printf("Hello!\r\n");
     PN532 pn532;
     PN532_Init(&pn532);
@@ -372,7 +371,11 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_GPIO_EXTI_CALLBACK(){
+    violet_led(1);
+    HAL_Delay(1000);
+    violet_led(0);
+}
 /* USER CODE END 4 */
 
 /**

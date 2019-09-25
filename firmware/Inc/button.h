@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-uint8_t if_button_pressed (void);
+//uint8_t if_button_pressed (void);
 
 #endif /*__BUTTON_H*/
