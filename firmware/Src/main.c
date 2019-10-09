@@ -23,8 +23,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "pn532_stm32f1.h"
 #include "led.h"
+#include "pn532_stm32f1.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,6 +52,7 @@ PCD_HandleTypeDef hpcd_USB_FS;
 
 /* USER CODE BEGIN PV */
 PN532 pn532;
+uint8_t button_flag = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -74,38 +76,39 @@ static void MX_UART4_Init(void);
   */
 int main(void)
 {
-    /* USER CODE BEGIN 1 */
-
-	
+  /* USER CODE BEGIN 1 */
+    /*
     uint8_t buff[255];
     uint8_t uid[MIFARE_UID_MAX_LENGTH];
     uint8_t key_a[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
     uint32_t pn532_error = PN532_ERROR_NONE;
     int32_t uid_len = 0;
-    /* USER CODE END 1 */
+    */
+  /* USER CODE END 1 */
 
-    /* MCU Configuration--------------------------------------------------------*/
+  /* MCU Configuration--------------------------------------------------------*/
 
-    /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-    HAL_Init();
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
 
-    /* USER CODE BEGIN Init */
+  /* USER CODE BEGIN Init */
 
-    /* USER CODE END Init */
+  /* USER CODE END Init */
 
-    /* Configure the system clock */
-    SystemClock_Config();
+  /* Configure the system clock */
+  SystemClock_Config();
 
-    /* USER CODE BEGIN SysInit */
+  /* USER CODE BEGIN SysInit */
 
-    /* USER CODE END SysInit */
+  /* USER CODE END SysInit */
 
-    /* Initialize all configured peripherals */
-    MX_GPIO_Init();
-    MX_USB_PCD_Init();
-    MX_SPI2_Init();
-    MX_UART4_Init();
-    /* USER CODE BEGIN 2 */
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_USB_PCD_Init();
+  MX_SPI2_Init();
+  MX_UART4_Init();
+  /* USER CODE BEGIN 2 */
+  /*
     printf("Hello!\r\n");
     PN532 pn532;
     PN532_Init(&pn532);
@@ -114,13 +117,16 @@ int main(void)
         printf("Found PN532 with firmware version: %d.%d\r\n", buff[1], buff[2]);
     PN532_SamConfiguration(&pn532);
     printf("Waiting for RFID/NFC card...\r\n");
-    /* USER CODE END 2 */
+  */
+    led_loop(1);
+  /* USER CODE END 2 */
 
-    /* Infinite loop */
-    /* USER CODE BEGIN WHILE */
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
     while (1)
     {
         // Check if a card is available to read
+        /*
         uid_len = PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
         if (uid_len == PN532_STATUS_ERROR) {
             printf(".");
@@ -132,11 +138,13 @@ int main(void)
             printf("\r\n");
             break;
         }
-    }
+        */
+    
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
+    }
+/*
     printf("Reading blocks...\r\n");
     for (uint8_t block_number = 0; block_number < 64; block_number++) {
         pn532_error = PN532_MifareClassicAuthenticateBlock(&pn532, uid, uid_len, block_number, MIFARE_CMD_AUTH_A, key_a);
@@ -155,6 +163,7 @@ int main(void)
     if (pn532_error) {
         printf("Error: 0x%02x\r\n", pn532_error);
     }
+*/    
   /* USER CODE END 3 */
 }
 
@@ -371,10 +380,19 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_GPIO_EXTI_CALLBACK(){
-    violet_led(1);
-    HAL_Delay(1000);
-    violet_led(0);
+void HAL_GPIO_EXTI_CALLBACK(uint16_t GPIO_Pin)
+{
+    if (GPIO_Pin == GPIO_PIN_2) 
+    {
+        red_led(1);
+        HAL_Delay(1000);
+        red_led(0);
+    }
+    else
+    {
+        __NOP();
+    }
+    
 }
 /* USER CODE END 4 */
 
