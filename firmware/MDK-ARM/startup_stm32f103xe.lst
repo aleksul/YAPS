@@ -580,19 +580,17 @@ ARM Macro Assembler    Page 9
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=keypad_cubemx\startup_stm32f103xe.d -okeypad_cubemx\startup_stm32f
-103xe.o -I.\RTE\Compiler -I.\RTE\_Keypad_cubemx -IC:\Users\Technospark_13\AppDa
-ta\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include -IC:\Users\Technospark_13
-\AppData\Local\Arm\Packs\Keil\ARM_Compiler\1.6.1\Include -IC:\Users\Technospark
+103xe.o -I.\RTE\_Keypad_cubemx -IC:\Users\Technospark_13\AppData\Local\Arm\Pack
+s\ARM\CMSIS\5.5.1\CMSIS\Core\Include -IC:\Users\Technospark_13\AppData\Local\Ar
+m\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --predefine="__MICROLIB SETA 1"
 
 
 
 ARM Macro Assembler    Page 10 
 
 
-_13\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --predefine
-="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION
- SETA 528" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_HD SETA 1" --list=
-startup_stm32f103xe.lst startup_stm32f103xe.s
+ --predefine="__UVISION_VERSION SETA 528" --predefine="_RTE_ SETA 1" --predefin
+e="STM32F10X_HD SETA 1" --list=startup_stm32f103xe.lst startup_stm32f103xe.s
 
 
 
@@ -1464,4 +1462,4 @@ Symbol: __main
       At line 168 in file startup_stm32f103xe.s
 Comment: __main used once
 2 symbols
-424 symbols in table
+423 symbols in table

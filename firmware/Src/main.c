@@ -50,8 +50,8 @@ UART_HandleTypeDef huart4;
 PCD_HandleTypeDef hpcd_USB_FS;
 
 /* USER CODE BEGIN PV */
+
 PN532 pn532;
-uint8_t button_flag = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -76,13 +76,13 @@ static void MX_UART4_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-    /*
+	
     uint8_t buff[255];
     uint8_t uid[MIFARE_UID_MAX_LENGTH];
     uint8_t key_a[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
     uint32_t pn532_error = PN532_ERROR_NONE;
-    int32_t uid_len = 0;
-    */
+    int32_t uid_len = 0;    
+	
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -107,17 +107,13 @@ int main(void)
   MX_SPI2_Init();
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
-  /*
-    printf("Hello!\r\n");
     PN532 pn532;
     PN532_Init(&pn532);
     PN532_GetFirmwareVersion(&pn532, buff);
     if (PN532_GetFirmwareVersion(&pn532, buff) == PN532_STATUS_OK)
         printf("Found PN532 with firmware version: %d.%d\r\n", buff[1], buff[2]);
     PN532_SamConfiguration(&pn532);
-    printf("Waiting for RFID/NFC card...\r\n");
-  */
-    led_loop(1);
+    printf("Waiting for RFID/NFC card...\r\n");    
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -125,7 +121,7 @@ int main(void)
     while (1)
     {
         // Check if a card is available to read
-        /*
+        
         uid_len = PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
         if (uid_len == PN532_STATUS_ERROR) {
             printf(".");
@@ -137,13 +133,10 @@ int main(void)
             printf("\r\n");
             break;
         }
-        */
-    
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
     }
-/*
     printf("Reading blocks...\r\n");
     for (uint8_t block_number = 0; block_number < 64; block_number++) {
         pn532_error = PN532_MifareClassicAuthenticateBlock(&pn532, uid, uid_len, block_number, MIFARE_CMD_AUTH_A, key_a);
@@ -161,8 +154,7 @@ int main(void)
     }
     if (pn532_error) {
         printf("Error: 0x%02x\r\n", pn532_error);
-    }
-*/    
+    }  
   /* USER CODE END 3 */
 }
 
@@ -383,7 +375,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     if (GPIO_Pin== BUTTON_Pin) 
     {
-        red_led(1);
+        led_toogle(5);
     }
     else
     {
