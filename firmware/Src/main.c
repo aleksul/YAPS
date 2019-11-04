@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "led.h"
 #include "pn532_stm32f1.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,6 +35,11 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define ITM_Port8(n)    (*((volatile unsigned char *)(0xE0000000+4*n)))
+#define ITM_Port16(n)   (*((volatile unsigned short*)(0xE0000000+4*n)))
+#define ITM_Port32(n)   (*((volatile unsigned long *)(0xE0000000+4*n)))
+#define DEMCR           (*((volatile unsigned long *)(0xE000EDFC)))
+#define TRCENA          0x01000000
 
 /* USER CODE END PD */
 
@@ -52,6 +58,9 @@ PCD_HandleTypeDef hpcd_USB_FS;
 /* USER CODE BEGIN PV */
 
 PN532 pn532;
+struct __FILE { int handle; /* Add whatever you need here */ };
+FILE __stdout;
+FILE __stdin;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -66,7 +75,13 @@ static void MX_UART4_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int fputc(int ch, FILE *f) {
+    if (DEMCR & TRCENA) {
+        while (ITM_Port32(0) == 0);
+            ITM_Port8(0) = ch;
+    }
+    return(ch);
+}
 /* USER CODE END 0 */
 
 /**
@@ -107,21 +122,25 @@ int main(void)
   MX_SPI2_Init();
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
+  /*
     PN532 pn532;
     PN532_Init(&pn532);
     PN532_GetFirmwareVersion(&pn532, buff);
     if (PN532_GetFirmwareVersion(&pn532, buff) == PN532_STATUS_OK)
         printf("Found PN532 with firmware version: %d.%d\r\n", buff[1], buff[2]);
     PN532_SamConfiguration(&pn532);
-    printf("Waiting for RFID/NFC card...\r\n");    
+    printf("Waiting for RFID/NFC card...\r\n"); 
+  */
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     while (1)
     {
-        // Check if a card is available to read
         
+        printf("Text\n\r");
+        // Check if a card is available to read
+        /*
         uid_len = PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
         if (uid_len == PN532_STATUS_ERROR) {
             printf(".");
@@ -133,6 +152,7 @@ int main(void)
             printf("\r\n");
             break;
         }
+        */
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

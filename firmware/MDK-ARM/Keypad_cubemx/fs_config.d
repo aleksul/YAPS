@@ -1,0 +1,10 @@
+keypad_cubemx\fs_config.o: RTE\File_System\FS_Config.c
+keypad_cubemx\fs_config.o: .\RTE\_Keypad_cubemx\RTE_Components.h
+keypad_cubemx\fs_config.o: C:\Users\Aleks\AppData\Local\Arm\Packs\Keil\MDK-Middleware\7.8.0\FileSystem\Include\fs_config.h
+keypad_cubemx\fs_config.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+keypad_cubemx\fs_config.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\rt_sys.h
+keypad_cubemx\fs_config.o: C:\Users\Aleks\AppData\Local\Arm\Packs\Keil\MDK-Middleware\7.8.0\FileSystem\Include\rl_fs_lib.h
+keypad_cubemx\fs_config.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+keypad_cubemx\fs_config.o: C:\Users\Aleks\AppData\Local\Arm\Packs\Keil\MDK-Middleware\7.8.0\FileSystem\Include\rl_fs.h
+keypad_cubemx\fs_config.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+keypad_cubemx\fs_config.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
