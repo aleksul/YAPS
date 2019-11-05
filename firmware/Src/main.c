@@ -20,12 +20,13 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "usb_device.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "led.h"
 #include "pn532_stm32f1.h"
-#include <stdio.h>
+#include "usbd_cdc_if.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -35,11 +36,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ITM_Port8(n)    (*((volatile unsigned char *)(0xE0000000+4*n)))
-#define ITM_Port16(n)   (*((volatile unsigned short*)(0xE0000000+4*n)))
-#define ITM_Port32(n)   (*((volatile unsigned long *)(0xE0000000+4*n)))
-#define DEMCR           (*((volatile unsigned long *)(0xE000EDFC)))
-#define TRCENA          0x01000000
 
 /* USER CODE END PD */
 
@@ -53,20 +49,15 @@ SPI_HandleTypeDef hspi2;
 
 UART_HandleTypeDef huart4;
 
-PCD_HandleTypeDef hpcd_USB_FS;
-
 /* USER CODE BEGIN PV */
 
-PN532 pn532;
-struct __FILE { int handle; /* Add whatever you need here */ };
-FILE __stdout;
-FILE __stdin;
+//PN532 pn532;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_USB_PCD_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_UART4_Init(void);
 /* USER CODE BEGIN PFP */
@@ -75,13 +66,7 @@ static void MX_UART4_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int fputc(int ch, FILE *f) {
-    if (DEMCR & TRCENA) {
-        while (ITM_Port32(0) == 0);
-            ITM_Port8(0) = ch;
-    }
-    return(ch);
-}
+
 /* USER CODE END 0 */
 
 /**
@@ -91,13 +76,19 @@ int fputc(int ch, FILE *f) {
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	
+	/*
     uint8_t buff[255];
     uint8_t uid[MIFARE_UID_MAX_LENGTH];
     uint8_t key_a[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
     uint32_t pn532_error = PN532_ERROR_NONE;
     int32_t uid_len = 0;    
-	
+	*/
+    uint8_t testDataToSend[8];
+ 
+    for (uint8_t i = 0; i < 8; i++)
+    {
+        testDataToSend[i] = i;
+    }
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -118,27 +109,30 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USB_PCD_Init();
   MX_SPI2_Init();
   MX_UART4_Init();
+  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
   /*
     PN532 pn532;
     PN532_Init(&pn532);
     PN532_GetFirmwareVersion(&pn532, buff);
-    if (PN532_GetFirmwareVersion(&pn532, buff) == PN532_STATUS_OK)
-        printf("Found PN532 with firmware version: %d.%d\r\n", buff[1], buff[2]);
+    if (PN532_GetFirmwareVersion(&pn532, buff) == PN532_STATUS_OK){
+        led_toogle(1);
+        HAL_Delay(1000);
+        led_toogle(7);
+    }
     PN532_SamConfiguration(&pn532);
-    printf("Waiting for RFID/NFC card...\r\n"); 
-  */
+    led_toogle(0);
+*/  
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     while (1)
     {
-        
-        printf("Text\n\r");
+        HAL_Delay(1000);
+        CDC_Transmit_FS(testDataToSend, 8);
         // Check if a card is available to read
         /*
         uid_len = PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
@@ -151,12 +145,14 @@ int main(void)
             }
             printf("\r\n");
             break;
+        
         }
-        */
+*/        
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
     }
+/*
     printf("Reading blocks...\r\n");
     for (uint8_t block_number = 0; block_number < 64; block_number++) {
         pn532_error = PN532_MifareClassicAuthenticateBlock(&pn532, uid, uid_len, block_number, MIFARE_CMD_AUTH_A, key_a);
@@ -175,6 +171,7 @@ int main(void)
     if (pn532_error) {
         printf("Error: 0x%02x\r\n", pn532_error);
     }  
+*/
   /* USER CODE END 3 */
 }
 
@@ -293,37 +290,6 @@ static void MX_UART4_Init(void)
   /* USER CODE BEGIN UART4_Init 2 */
 
   /* USER CODE END UART4_Init 2 */
-
-}
-
-/**
-  * @brief USB Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USB_PCD_Init(void)
-{
-
-  /* USER CODE BEGIN USB_Init 0 */
-
-  /* USER CODE END USB_Init 0 */
-
-  /* USER CODE BEGIN USB_Init 1 */
-
-  /* USER CODE END USB_Init 1 */
-  hpcd_USB_FS.Instance = USB;
-  hpcd_USB_FS.Init.dev_endpoints = 8;
-  hpcd_USB_FS.Init.speed = PCD_SPEED_FULL;
-  hpcd_USB_FS.Init.low_power_enable = DISABLE;
-  hpcd_USB_FS.Init.lpm_enable = DISABLE;
-  hpcd_USB_FS.Init.battery_charging_enable = DISABLE;
-  if (HAL_PCD_Init(&hpcd_USB_FS) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USB_Init 2 */
-
-  /* USER CODE END USB_Init 2 */
 
 }
 
