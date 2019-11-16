@@ -27,6 +27,7 @@
 #include "led.h"
 #include "pn532_stm32f1.h"
 #include "usbd_cdc_if.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -66,7 +67,11 @@ static void MX_UART4_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int fputc( int ch, FILE *f ){
+    while(!(CDC_Transmit_FS((uint8_t*)&ch, 1) == USBD_BUSY));
+    HAL_Delay(1);
+    return ch;
+}
 /* USER CODE END 0 */
 
 /**
@@ -76,6 +81,7 @@ static void MX_UART4_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+    
 	/*
     uint8_t buff[255];
     uint8_t uid[MIFARE_UID_MAX_LENGTH];
@@ -83,12 +89,7 @@ int main(void)
     uint32_t pn532_error = PN532_ERROR_NONE;
     int32_t uid_len = 0;    
 	*/
-    uint8_t testDataToSend[8];
- 
-    for (uint8_t i = 0; i < 8; i++)
-    {
-        testDataToSend[i] = i;
-    }
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -131,8 +132,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
     while (1)
     {
+        
+        printf("Ground control to major Tom!\r\n");
         HAL_Delay(1000);
-        CDC_Transmit_FS(testDataToSend, 8);
         // Check if a card is available to read
         /*
         uid_len = PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
