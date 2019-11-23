@@ -81,14 +81,12 @@ int fputc( int ch, FILE *f ){
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-    
-	/*
+
     uint8_t buff[255];
     uint8_t uid[MIFARE_UID_MAX_LENGTH];
     uint8_t key_a[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
     uint32_t pn532_error = PN532_ERROR_NONE;
-    int32_t uid_len = 0;    
-	*/
+    int32_t uid_len = 0;
 
   /* USER CODE END 1 */
 
@@ -114,29 +112,21 @@ int main(void)
   MX_UART4_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-  /*
     PN532 pn532;
     PN532_Init(&pn532);
     PN532_GetFirmwareVersion(&pn532, buff);
     if (PN532_GetFirmwareVersion(&pn532, buff) == PN532_STATUS_OK){
-        led_toogle(1);
-        HAL_Delay(1000);
-        led_toogle(7);
+        printf("Found PN532 with firmware version: %d.%d\r\n", buff[1], buff[2]);
     }
     PN532_SamConfiguration(&pn532);
-    led_toogle(0);
-*/  
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     while (1)
     {
-        
-        printf("Ground control to major Tom!\r\n");
-        HAL_Delay(1000);
         // Check if a card is available to read
-        /*
         uid_len = PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
         if (uid_len == PN532_STATUS_ERROR) {
             printf(".");
@@ -148,13 +138,11 @@ int main(void)
             printf("\r\n");
             break;
         
-        }
-*/        
+        } 
+    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    }
-/*
     printf("Reading blocks...\r\n");
     for (uint8_t block_number = 0; block_number < 64; block_number++) {
         pn532_error = PN532_MifareClassicAuthenticateBlock(&pn532, uid, uid_len, block_number, MIFARE_CMD_AUTH_A, key_a);
@@ -173,7 +161,7 @@ int main(void)
     if (pn532_error) {
         printf("Error: 0x%02x\r\n", pn532_error);
     }  
-*/
+
   /* USER CODE END 3 */
 }
 
