@@ -50,6 +50,7 @@ SPI_HandleTypeDef hspi2;
 
 UART_HandleTypeDef huart4;
 
+PN532 pn532;
 /* USER CODE BEGIN PV */
 
 //PN532 pn532;
@@ -112,7 +113,7 @@ int main(void)
   MX_UART4_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-    PN532 pn532;
+    
     PN532_Init(&pn532);
     PN532_GetFirmwareVersion(&pn532, buff);
     if (PN532_GetFirmwareVersion(&pn532, buff) == PN532_STATUS_OK){
