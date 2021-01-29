@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "vscode_stm32_c_cpp_properties",
+            "includePath": [
+                "${workspaceFolder}/firmware",
+                "${workspaceFolder}/firmware/Inc",
+                "${workspaceFolder}/firmware/Drivers/STM32F1xx_HAL_Driver/Inc",
+                "${workspaceFolder}/firmware/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy",
+                "${workspaceFolder}/firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Include",
+                "${workspaceFolder}/firmware/Drivers/CMSIS/Include",
+                "${workspaceFolder}/firmware/Drivers/CMSIS/Include",
+                "C:/STM32/gnu-toolchain/lib/gcc/arm-none-eabi/10.2.1/include",
+                "${workspaceFolder}/firmware/Lib/Inc"
+            ],
+            "defines": [
+                "USE_HAL_DRIVER",
+                "STM32F103xE"
+            ],
+            "compilerPath": "C:\\STM32\\gnu-toolchain\\bin\\arm-none-eabi-gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}

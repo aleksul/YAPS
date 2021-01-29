@@ -1,0 +1,42 @@
+{
+    "configurations": [
+    {
+        "cwd": "${workspaceFolder}\\firmware\\build",
+        "executable": "${workspaceFolder}\\firmware\\build\\Keypad_cubemx.elf",
+        "name": "Debug Microcontroller",
+        "request": "launch",
+        "type": "cortex-debug",
+        "servertype": "openocd",
+        "interface": "swd",
+        "device": "STM32F103RE",
+        "runToMain": true,
+        "preRestartCommands": [
+            "target remote localhost:3333",
+            "add-symbol-file ${workspaceFolderBasename}",
+            "enable breakpoint",
+            "monitor reset"
+        ],
+        "svdFile": "${workspaceFolder}\\firmware\\STM32F103xx.svd",
+        "configFiles": [
+            "interface/stlink.cfg",
+            "target/stm32f1x.cfg"
+        ],
+        "preLaunchTask": "Build project",
+        "swoConfig": {
+            "enabled": true,
+            "source": "probe",
+            "swoFrequency": 2000000,
+            "cpuFrequency": 72000000,
+            "decoders": [
+                {
+                    "port": 0,
+                    "label": "Output",
+                    "type": "console",
+                    "encoding":"ascii"
+                }
+            ]
+            
+        }
+    }
+    ]
+}

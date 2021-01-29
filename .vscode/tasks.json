@@ -1,0 +1,133 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build project",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "-s",
+                "GCC_PATH=C:/STM32/gnu-toolchain/bin",
+                "-j10",
+                "all"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\firmware"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Delete build folder",
+            "type": "shell",
+            "command": "del",
+            "args": [
+                "/S",
+                "/F",
+                "/Q",
+                "build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\firmware",
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/C"
+                    ]
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "CPU: Build, Download and run",
+            "type": "shell",
+            "command": "openocd",
+            "args": [
+                "-f",
+                "interface/stlink.cfg",
+                "-f",
+                "target/stm32f1x.cfg",
+                "-c",
+                "itm port 0 1",
+                "-c",
+                "program build/Keypad_cubemx.elf verify reset exit"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\firmware"
+            },
+            "problemMatcher": [],
+            "dependsOn": "Build project"
+        },
+        {
+            "label": "CPU: Download and run",
+            "type": "shell",
+            "command": "openocd",
+            "args": [
+                "-f",
+                "interface/stlink.cfg",
+                "-f",
+                "target/stm32f1x.cfg",
+                "-c",
+                "program build/Keypad_cubemx.elf verify reset exit"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\firmware"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "CPU: Reset and run",
+            "type": "shell",
+            "command": "openocd",
+            "args": [
+                "-f",
+                "interface/stlink.cfg",
+                "-f",
+                "target/stm32f1x.cfg",
+                "-c init",
+                "-c reset",
+                "-c exit"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\firmware"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "CPU: Halt",
+            "type": "shell",
+            "command": "openocd",
+            "args": [
+                "-f",
+                "interface/stlink.cfg",
+                "-f",
+                "target/stm32f1x.cfg",
+                "-c init",
+                "-c halt",
+                "-c exit"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\firmware"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Open CubeMX project",
+            "type": "shell",
+            "command": "STM32CubeMX",
+            "args": [
+                "${workspaceFolder}\\firmware\\Keypad_cubemx.ioc"
+            ],
+            "options": {
+                "cwd": "C:\\Program Files\\STMicroelectronics\\STM32Cube\\STM32CubeMX"
+            },
+            "presentation": {
+                "focus": false
+            },
+            "problemMatcher": []
+        }
+    ]
+}

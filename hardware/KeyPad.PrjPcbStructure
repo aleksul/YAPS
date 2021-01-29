@@ -1,0 +1,3 @@
+Record=TopLevelDocument|FileName=pn532.SchDoc|SheetNumber= 
+Record=NoMainPathDocument|SourceDocument=pn532.SchDoc|FileName=some_mini_things.SchDoc|SheetNumber= 
+Record=NoMainPathDocument|SourceDocument=pn532.SchDoc|FileName=STM32.SchDoc|SheetNumber= 
