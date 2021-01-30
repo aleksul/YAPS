@@ -26,7 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "pn532_stm32f1.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,7 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+PN532 pn532;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -58,13 +58,7 @@ static void MX_NVIC_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/*
-int fputc( int ch, FILE *f ){
-  while(!(CDC_Transmit_FS((uint8_t*)&ch, 1) == USBD_BUSY));
-  HAL_Delay(1);
-  return ch;
-}
-*/
+
 /* USER CODE END 0 */
 
 /**
@@ -74,7 +68,11 @@ int fputc( int ch, FILE *f ){
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+  uint8_t buff[255];
+  uint8_t uid[MIFARE_UID_MAX_LENGTH];
+  uint8_t key_a[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+  uint32_t pn532_error = PN532_ERROR_NONE;
+  int32_t uid_len = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -102,7 +100,18 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  
+  PN532 pn532;
+  PN532_Init(&pn532);
+  PN532_GetFirmwareVersion(&pn532, buff);
+  if (PN532_GetFirmwareVersion(&pn532, buff) == PN532_STATUS_OK) {
+    HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);
+  } else {
+    HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
+  }
+  HAL_Delay(3000);
+  HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, RESET);
+  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET);
+  PN532_SamConfiguration(&pn532);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -173,6 +182,9 @@ static void MX_NVIC_Init(void)
   /* EXTI2_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+  /* EXTI9_5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 }
 
 /* USER CODE BEGIN 4 */

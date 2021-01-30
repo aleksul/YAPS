@@ -1,5 +1,0 @@
-{
-    "cortex-debug.armToolchainPath": "C:\\STM32\\gnu-toolchain\\bin",
-    "cortex-debug.openocdPath": "C:\\STM32\\OpenOCD-20201228\\bin\\openocd.exe",
-    "cortex-debug.enableTelemetry": false
-}

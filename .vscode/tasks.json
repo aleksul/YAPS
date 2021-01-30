@@ -7,7 +7,7 @@
             "command": "make",
             "args": [
                 "-s",
-                "GCC_PATH=C:/STM32/gnu-toolchain/bin",
+                "GCC_PATH=C:/STM/EmbeddedGCC/bin",
                 "-j10",
                 "all"
             ],

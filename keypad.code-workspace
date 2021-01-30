@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"cortex-debug.armToolchainPath": "C:\\STM\\EmbeddedGCC\\bin",
+		"cortex-debug.openocdPath": "C:\\STM\\OpenOCD\\bin\\openocd.exe",
+		"cortex-debug.enableTelemetry": false
+	}
+}
