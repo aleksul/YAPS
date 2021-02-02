@@ -46,7 +46,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-PN532 pn532;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -102,16 +101,16 @@ int main(void)
   /* USER CODE BEGIN 2 */
   PN532 pn532;
   PN532_Init(&pn532);
-  PN532_GetFirmwareVersion(&pn532, buff);
+  HAL_Delay(100);
   if (PN532_GetFirmwareVersion(&pn532, buff) == PN532_STATUS_OK) {
     HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);
+    HAL_Delay(1000);
+    HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, RESET);
   } else {
-    HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
+    return -1;
   }
-  HAL_Delay(3000);
-  HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, RESET);
-  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET);
   PN532_SamConfiguration(&pn532);
+  HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin, SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -121,6 +120,24 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    // Check if a card is available to read
+    uid_len = PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
+    if (uid_len == PN532_STATUS_ERROR) {
+      __NOP();
+    } else {
+      HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin, RESET);
+      HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);
+      HAL_Delay(500);
+      HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, RESET);
+      HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin, SET);
+      /*
+      printf("Found card with UID: ");
+      for (uint8_t i = 0; i < uid_len; i++) {
+        printf("%02x ", uid[i]);
+      }
+      printf("\r\n");
+      */
+    }
   }
   /* USER CODE END 3 */
 }
