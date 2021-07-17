@@ -8,7 +8,7 @@ For purposes of the foregoing, “Sell” means practicing any or all of the rig
 
 Software: YAPS
 
-License: MIT
+License: MIT with Commons Clause
 
 Licensor: Aleksul
 
